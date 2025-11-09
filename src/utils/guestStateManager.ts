@@ -9,11 +9,16 @@ const GIST_ID = '2569e56f06697ddb330371c012ab7341'; // Your public gist ID
 const GIST_FILENAME = 'guestState.json';
 const API_BASE = 'https://api.github.com';
 
-import { getRuntimeConfig } from '../config';
-
-// Get token from runtime config
+// Get token from environment
 const getGitHubToken = (): string | undefined => {
-  return getRuntimeConfig().GITHUB_TOKEN;
+  // In development, use the environment variable
+  if (import.meta.env.DEV) {
+    return import.meta.env.VITE_GITHUB_TOKEN;
+  }
+  
+  // In production (GitHub Pages), use a different approach to avoid token exposure
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get('token') || undefined;
 };
 
 // Helper function to create headers
