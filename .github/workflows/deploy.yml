@@ -29,15 +29,9 @@ jobs:
         run: npm ci
         
       - name: Build
+        env:
+          VITE_GITHUB_TOKEN: ${{ secrets.GIST_TOKEN }}
         run: npm run build
-        
-      - name: Create runtime config
-        run: |
-          echo "<script>" > dist/runtime-config.js
-          echo "window.__RUNTIME_CONFIG__ = {" >> dist/runtime-config.js
-          echo "  GITHUB_TOKEN: '${{ secrets.GIST_TOKEN }}'" >> dist/runtime-config.js
-          echo "};" >> dist/runtime-config.js
-          echo "</script>" >> dist/runtime-config.js
         
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
