@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# Runtime configuration
+runtime-config.js
+**/runtime-config.js
+public/runtime-config.js
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

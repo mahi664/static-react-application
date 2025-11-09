@@ -9,9 +9,11 @@ const GIST_ID = '2569e56f06697ddb330371c012ab7341'; // Your public gist ID
 const GIST_FILENAME = 'guestState.json';
 const API_BASE = 'https://api.github.com';
 
-// Get token from environment or window
+import { getRuntimeConfig } from '../config';
+
+// Get token from runtime config
 const getGitHubToken = (): string | undefined => {
-  return import.meta.env.VITE_GITHUB_TOKEN || window?.ENV?.GITHUB_TOKEN;
+  return getRuntimeConfig().GITHUB_TOKEN;
 };
 
 // Helper function to create headers
