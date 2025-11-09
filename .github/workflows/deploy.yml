@@ -42,7 +42,7 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GIST_TOKEN }}
           publish_dir: ./dist    # Deploy the dist folder
           enable_jekyll: false   # Disable Jekyll processing
           cname: ${{ vars.CNAME }}  # If you have a custom domain
