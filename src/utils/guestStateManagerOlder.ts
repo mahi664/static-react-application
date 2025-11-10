@@ -4,7 +4,7 @@ interface GuestState {
   lastUpdated: number;
 }
 
-const API_BASE = import.meta.env.VITE_WORKER_URL || 'https://spring-mode-525a.mahighuge664.workers.dev';
+const API_BASE = import.meta.env.VITE_WORKER_URL || 'https://your-worker.username.workers.dev';
 
 const defaultState: GuestState = {
   isNameRevealed: false,
@@ -14,7 +14,6 @@ const defaultState: GuestState = {
 
 export const loadGuestState = async (): Promise<GuestState> => {
   try {
-    console.log('Fetching state from', API_BASE);
     const response = await fetch(`${API_BASE}/state`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }

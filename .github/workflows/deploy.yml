@@ -29,6 +29,8 @@ jobs:
         run: npm ci
         
       - name: Build
+        env:
+          VITE_WORKER_URL: 'https://your-worker.username.workers.dev'
         run: npm run build
 
       - name: Configure environment URL
