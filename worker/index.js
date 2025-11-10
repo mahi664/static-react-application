@@ -7,16 +7,22 @@ export default {
       }
       
       // CORS headers for GitHub Pages and local development
+      const origin = request.headers.get('Origin');
+      const allowedOrigins = ['https://mahi664.github.io', 'http://localhost:5173', 'http://localhost:4173'];
+      
       const corsHeaders = {
-        'Access-Control-Allow-Origin': request.headers.get('Origin') || 'https://mahi664.github.io',
+        'Access-Control-Allow-Origin': allowedOrigins.includes(origin) ? origin : 'https://mahi664.github.io',
         'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Credentials': 'true'
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Max-Age': '86400'
       };
 
       // Handle CORS preflight
       if (request.method === 'OPTIONS') {
-        return new Response(null, { headers: corsHeaders });
+        return new Response(null, { 
+          headers: corsHeaders,
+          status: 204
+        });
       }
 
       const url = new URL(request.url);
@@ -113,8 +119,7 @@ export default {
         status: 500,
         headers: {
           'Content-Type': 'text/plain',
-          'Access-Control-Allow-Origin': request.headers.get('Origin') || 'https://mahi664.github.io',
-          'Access-Control-Allow-Credentials': 'true'
+          ...corsHeaders
         }
       });
     }
