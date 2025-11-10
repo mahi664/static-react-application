@@ -18,11 +18,11 @@ interface Guest {
 }
 
 const initialGuests: Guest[] = [
-  { id: '1', name: 'John Rajesh', hasRevealed: false, passcode: 'JR2025' },
-  { id: '2', name: 'Abhisek Chandra', hasRevealed: false, passcode: 'AC2025' },
-  { id: '3', name: 'Raj L', hasRevealed: false, passcode: 'RL2025' },
-  { id: '4', name: 'Kashish Jain', hasRevealed: false, passcode: 'KJ2025' },
-  { id: '5', name: 'Siddhi Narkar', hasRevealed: false, passcode: 'SN2025' },
+  { id: '1', name: 'Siddhi Narkar', hasRevealed: false, passcode: 'SN2025' },
+  { id: '2', name: 'Mahesh Ghuge', hasRevealed: false, passcode: 'MG2025' },
+  { id: '3', name: 'Akshay Singh Rana', hasRevealed: false, passcode: 'ASR2025' },
+  { id: '4', name: 'Deepak Sabharwal', hasRevealed: false, passcode: 'DS2025' },
+  { id: '5', name: 'Khemraj Singh', hasRevealed: false, passcode: 'KS2025' },
 ];
 
 function App() {
