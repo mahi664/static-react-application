@@ -17,6 +17,7 @@ export const loadGuestState = async (): Promise<GuestState> => {
     console.log('Fetching state from', API_BASE);
     const response = await fetch(`${API_BASE}/state`, {
       method: 'GET',
+      mode: 'cors',
       headers: { 'Content-Type': 'application/json' }
     });
 
@@ -43,6 +44,7 @@ export const saveGuestState = async (state: GuestState): Promise<void> => {
 
     const response = await fetch(`${API_BASE}/state`, {
       method: 'POST',
+      mode: 'cors',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(state)
     });
