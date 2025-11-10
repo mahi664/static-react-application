@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import AnimatedBackground from './components/AnimatedBackground';
 import GuestList from './components/GuestList';
 import NameReveal from './components/NameReveal';
-import RevealButton from './components/RevealButton';
 import RevealPasscodeDialog from './components/RevealPasscodeDialog';
 import { loadGuestState, addAuthenticatedGuest, setNameRevealed as revealName, startStatePolling } from './utils/guestStateManager';
 
