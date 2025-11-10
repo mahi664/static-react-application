@@ -1,0 +1,138 @@
+/* Stage and environment effects */
+.theater-environment {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  overflow: hidden;
+}
+
+/* Spotlight animations */
+@keyframes spotlightLeft {
+  0%, 100% { transform: rotate(-15deg) translateY(0); opacity: 0.7; }
+  50% { transform: rotate(-20deg) translateY(-10px); opacity: 0.9; }
+}
+
+@keyframes spotlightRight {
+  0%, 100% { transform: rotate(15deg) translateY(0); opacity: 0.7; }
+  50% { transform: rotate(20deg) translateY(-10px); opacity: 0.9; }
+}
+
+.spotlight {
+  position: absolute;
+  width: 150px;
+  height: 300px;
+  top: -150px;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  pointer-events: none;
+}
+
+.spotlight.left {
+  left: 20%;
+  transform-origin: bottom left;
+  background: radial-gradient(circle at 50% 100%, rgba(255, 255, 200, 0.3), transparent 70%);
+  animation: spotlightLeft 4s ease-in-out infinite;
+}
+
+.spotlight.right {
+  right: 20%;
+  transform-origin: bottom right;
+  background: radial-gradient(circle at 50% 100%, rgba(255, 255, 200, 0.3), transparent 70%);
+  animation: spotlightRight 4s ease-in-out infinite;
+}
+
+.reveal .spotlight {
+  opacity: 1;
+}
+
+/* Stage platform effect */
+.stage-floor {
+  position: absolute;
+  bottom: 0;
+  left: -20%;
+  right: -20%;
+  height: 100px;
+  background: linear-gradient(
+    180deg,
+    #1a1a1a 0%,
+    #333 50%,
+    #1a1a1a 100%
+  );
+  transform: perspective(500px) rotateX(45deg);
+  transform-origin: bottom;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.reveal .stage-floor {
+  opacity: 1;
+}
+
+/* Side curtains */
+.side-curtain {
+  position: absolute;
+  top: 0;
+  width: 50px;
+  height: 100%;
+  background: #8B0000;
+  opacity: 0.8;
+  z-index: 4;
+}
+
+.side-curtain.left {
+  left: 0;
+  transform-origin: left;
+  box-shadow: inset -5px 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.side-curtain.right {
+  right: 0;
+  transform-origin: right;
+  box-shadow: inset 5px 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Decorative rope tassels */
+
+
+/* Smoke effect */
+@keyframes smoke {
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  50% { opacity: 0.3; }
+  100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+}
+
+.smoke-particle {
+  position: absolute;
+  bottom: 0;
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.2), transparent);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.reveal .smoke-particle {
+  animation: smoke 3s ease-out infinite;
+}
+
+/* Stage lighting gradient */
+.stage-lighting {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    circle at 50% 30%,
+    rgba(255, 255, 200, 0.1),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  pointer-events: none;
+}
+
+.reveal .stage-lighting {
+  opacity: 1;
+}

@@ -1,0 +1,202 @@
+@keyframes curtainLeftReveal {
+  0% {
+    transform: translateX(0) skewX(0deg);
+  }
+  15% {
+    transform: translateX(-10%) skewX(-2deg);
+  }
+  100% {
+    transform: translateX(-65%) skewX(0deg);
+  }
+}
+
+@keyframes curtainRightReveal {
+  0% {
+    transform: translateX(0) skewX(0deg);
+  }
+  15% {
+    transform: translateX(10%) skewX(2deg);
+  }
+  100% {
+    transform: translateX(65%) skewX(0deg);
+  }
+}
+
+@keyframes swayLeft {
+  0%, 100% { transform: translateX(-2px) skewX(-1deg); }
+  50% { transform: translateX(0) skewX(0deg); }
+}
+
+@keyframes swayRight {
+  0%, 100% { transform: translateX(2px) skewX(1deg); }
+  50% { transform: translateX(0) skewX(0deg); }
+}
+
+.curtain-container {
+  position: absolute;
+  top: 0;
+  left: -10%;
+  width: 120%;
+  height: 100%;
+  z-index: 2;
+  display: flex;
+  perspective: 1000px;
+  justify-content: space-between;
+}
+
+.curtain-left, .curtain-right {
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(135deg, #a5243d 0%, #8B0000 40%, #700000 100%);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    inset 0 0 50px rgba(0, 0, 0, 0.6),
+    5px 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.curtain-left {
+  transform-origin: right center;
+  border-right: 4px solid #600;
+  animation: swayLeft 6s ease-in-out infinite;
+  transform-style: preserve-3d;
+  /* Add inner shadow to create fold effect */
+  background: linear-gradient(135deg, #a5243d 0%, #8B0000 40%, #700000 100%),
+              linear-gradient(90deg, 
+                rgba(0, 0, 0, 0.4) 0%,
+                transparent 10%,
+                transparent 90%,
+                rgba(0, 0, 0, 0.4) 100%);
+}
+
+.curtain-right {
+  transform-origin: left center;
+  border-left: 4px solid #600;
+  animation: swayRight 6s ease-in-out infinite;
+  transform-style: preserve-3d;
+  /* Add inner shadow to create fold effect */
+  background: linear-gradient(135deg, #a5243d 0%, #8B0000 40%, #700000 100%),
+              linear-gradient(-90deg, 
+                rgba(0, 0, 0, 0.4) 0%,
+                transparent 10%,
+                transparent 90%,
+                rgba(0, 0, 0, 0.4) 100%);
+}
+
+/* Pleats and folds */
+.curtain-left::before, .curtain-right::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 0, 0, 0.2) 2px,
+    rgba(0, 0, 0, 0.3) 4px,
+    transparent 6px,
+    transparent 10px
+  ),
+  repeating-linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1) 1px,
+    rgba(255, 255, 255, 0.05) 2px,
+    transparent 4px,
+    transparent 12px
+  );
+  opacity: 0.8;
+}
+
+/* Velvet texture effect */
+.curtain-left::after, .curtain-right::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 50%
+    ) 0 0/50px 50px,
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.7) 0%,
+      transparent 20%,
+      transparent 80%,
+      rgba(0, 0, 0, 0.7) 100%
+    );
+  mix-blend-mode: overlay;
+}
+
+.reveal .curtain-left {
+  animation: curtainLeftReveal 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.reveal .curtain-right {
+  animation: curtainRightReveal 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.name-container {
+  position: relative;
+  overflow: hidden;
+  padding: 2rem;
+  background: #111;
+}
+
+/* Ornate curtain rod and decorations */
+.curtain-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -20px;
+  right: -20px;
+  height: 30px;
+  background: linear-gradient(
+    to bottom,
+    #daa520,
+    #b8860b
+  );
+  z-index: 3;
+  border: 2px solid #daa520;
+  border-radius: 5px;
+  box-shadow: 
+    0 5px 15px rgba(0, 0, 0, 0.5),
+    inset 0 -5px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Curtain tassels */
+/* Curtain tassels */
+.curtain-left::after, .curtain-right::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  background: 
+    linear-gradient(
+      to bottom,
+      #8B0000,
+      #700000
+    );
+  border-top: 3px solid #daa520;
+  box-shadow: 
+    0 -5px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Add decorative finials to the curtain rod */
+.curtain-container::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -30px;
+  right: -30px;
+  height: 20px;
+  background: 
+    radial-gradient(circle at 0% 50%, #daa520 0%, #daa520 5px, transparent 6px),
+    radial-gradient(circle at 100% 50%, #daa520 0%, #daa520 5px, transparent 6px);
+  z-index: 4;
+}
