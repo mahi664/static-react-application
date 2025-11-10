@@ -109,7 +109,12 @@ function App() {
         </header>
 
         <section className="reveal-section">
-          <NameReveal name={REVEAL_NAME} isRevealed={isNameRevealed} />
+          <NameReveal 
+            name={REVEAL_NAME} 
+            isRevealed={isNameRevealed}
+            guestCount={revealedCount}
+            onReveal={handleRevealRequest}
+          />
           
           <div style={{ 
               width: '100%',
