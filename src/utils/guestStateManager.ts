@@ -4,7 +4,7 @@ interface GuestState {
   lastUpdated: number;
 }
 
-const API_BASE = import.meta.env.VITE_WORKER_URL || 'https://spring-mode-525a.mahighuge664.workers.dev';
+const API_BASE = 'https://spring-mode-525a.mahighuge664.workers.dev';
 
 const defaultState: GuestState = {
   isNameRevealed: false,
