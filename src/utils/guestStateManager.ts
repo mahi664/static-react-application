@@ -1,7 +1,20 @@
+interface Guest {
+  id: string;
+  name: string;
+  hasRevealed: boolean;
+  passcode: string;
+}
+
 interface GuestState {
   isNameRevealed: boolean;
   authenticatedGuests: string[];
   lastUpdated: number;
+  guests: Guest[];
+  config: {
+    revealName: string;
+    requiredReveals: number;
+    adminPasscode: string;
+  };
 }
 
 const API_BASE = 'https://spring-mode-525a.mahighuge664.workers.dev';
@@ -9,7 +22,13 @@ const API_BASE = 'https://spring-mode-525a.mahighuge664.workers.dev';
 const defaultState: GuestState = {
   isNameRevealed: false,
   authenticatedGuests: [],
-  lastUpdated: Date.now()
+  lastUpdated: Date.now(),
+  guests: [],
+  config: {
+    revealName: "The Bulls of Code Street",
+    requiredReveals: 5,
+    adminPasscode: "admin2025"
+  }
 };
 
 export const loadGuestState = async (): Promise<GuestState> => {

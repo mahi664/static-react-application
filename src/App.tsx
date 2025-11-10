@@ -6,10 +6,6 @@ import RevealButton from './components/RevealButton';
 import RevealPasscodeDialog from './components/RevealPasscodeDialog';
 import { loadGuestState, addAuthenticatedGuest, setNameRevealed as revealName, startStatePolling } from './utils/guestStateManager';
 
-const REVEAL_NAME = "The Bulls of Code Street"; // Replace with the actual name to be revealed
-const REQUIRED_REVEALS = 5; // Number of guests needed to reveal the name
-const ADMIN_PASSCODE = "admin2025"; // Admin passcode for final reveal
-
 interface Guest {
   id: string;
   name: string;
@@ -17,18 +13,15 @@ interface Guest {
   passcode: string;
 }
 
-const initialGuests: Guest[] = [
-  { id: '1', name: 'Siddhi Narkar', hasRevealed: false, passcode: 'SN2025' },
-  { id: '2', name: 'Mahesh Ghuge', hasRevealed: false, passcode: 'MG2025' },
-  { id: '3', name: 'Akshay Singh Rana', hasRevealed: false, passcode: 'ASR2025' },
-  { id: '4', name: 'Deepak Sabharwal', hasRevealed: false, passcode: 'DS2025' },
-  { id: '5', name: 'Khemraj Singh', hasRevealed: false, passcode: 'KS2025' },
-];
-
 function App() {
   const [isNameRevealed, setIsNameRevealed] = useState(false);
-  const [guests, setGuests] = useState<Guest[]>(initialGuests);
+  const [guests, setGuests] = useState<Guest[]>([]);
   const [showPasscodeDialog, setShowPasscodeDialog] = useState(false);
+  const [config, setConfig] = useState({
+    revealName: "",
+    requiredReveals: 5,
+    adminPasscode: ""
+  });
 
   useEffect(() => {
     // Load initial state and start polling
@@ -36,10 +29,13 @@ function App() {
       try {
         const state = await loadGuestState();
         setIsNameRevealed(state.isNameRevealed);
-        setGuests(initialGuests.map(guest => ({
-          ...guest,
-          hasRevealed: state.authenticatedGuests.includes(guest.id)
-        })));
+        setConfig(state.config);
+        if (state.guests) {
+          setGuests(state.guests.map(guest => ({
+            ...guest,
+            hasRevealed: state.authenticatedGuests.includes(guest.id)
+          })));
+        }
       } catch (error) {
         console.error('Error loading state:', error);
       }
@@ -49,10 +45,12 @@ function App() {
     // Start polling for updates
     const stopPolling = startStatePolling((state) => {
       setIsNameRevealed(state.isNameRevealed);
-      setGuests(initialGuests.map(guest => ({
-        ...guest,
-        hasRevealed: state.authenticatedGuests.includes(guest.id)
-      })));
+      if (state.guests) {
+        setGuests(state.guests.map(guest => ({
+          ...guest,
+          hasRevealed: state.authenticatedGuests.includes(guest.id)
+        })));
+      }
     });
 
     // Cleanup polling on unmount
@@ -63,10 +61,12 @@ function App() {
     try {
       await addAuthenticatedGuest(guestId);
       const state = await loadGuestState();
-      setGuests(initialGuests.map(guest => ({
-        ...guest,
-        hasRevealed: state.authenticatedGuests.includes(guest.id)
-      })));
+      if (state.guests) {
+        setGuests(state.guests.map(guest => ({
+          ...guest,
+          hasRevealed: state.authenticatedGuests.includes(guest.id)
+        })));
+      }
     } catch (error) {
       console.error('Error authenticating guest:', error);
       alert('Failed to authenticate guest. Please try again.');
@@ -78,7 +78,7 @@ function App() {
   };
 
   const handlePasscodeSubmit = async (passcode: string) => {
-    if (passcode === ADMIN_PASSCODE) {
+    if (passcode === config.adminPasscode) {
       try {
         await revealName(true);
         setShowPasscodeDialog(false);
@@ -97,7 +97,7 @@ function App() {
   };
 
   const revealedCount = guests.filter(guest => guest.hasRevealed).length;
-  const canReveal = revealedCount >= REQUIRED_REVEALS;
+  const canReveal = revealedCount >= config.requiredReveals;
 
   return (
     <div className="name-reveal-app">
@@ -110,7 +110,7 @@ function App() {
 
         <section className="reveal-section">
           <NameReveal 
-            name={REVEAL_NAME} 
+            name={config.revealName} 
             isRevealed={isNameRevealed}
             guestCount={revealedCount}
             onReveal={handleRevealRequest}
@@ -134,14 +134,9 @@ function App() {
                 ? "🎉 Congratulations! The team name has been revealed! 🎊"
                 : canReveal
                   ? "All set! Click the button to reveal the name!"
-                  : `${REQUIRED_REVEALS - revealedCount} more guests needed to reveal the name`}
+                  : `${config.requiredReveals - revealedCount} more guests needed to reveal the name`}
             </p>
-            {!isNameRevealed && (
-              <RevealButton
-                onReveal={handleRevealRequest}
-                disabled={!canReveal || isNameRevealed}
-              />
-            )}
+            
             {showPasscodeDialog && (
               <RevealPasscodeDialog
                 onSubmit={handlePasscodeSubmit}

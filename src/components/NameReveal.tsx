@@ -225,9 +225,9 @@ const NameReveal: React.FC<NameRevealProps> = ({ name, isRevealed, guestCount, o
               onClick={onReveal}
               style={{
                 position: 'absolute',
-                bottom: '10%',
-                left: '50%',
-                transform: 'translateX(-50%)',
+                top: '50%',
+                left: '35%',
+                transform: 'translate(-50%, -50%)',
                 fontSize: '1.2rem',
                 fontWeight: 'bold',
                 color: '#fff',
@@ -242,11 +242,11 @@ const NameReveal: React.FC<NameRevealProps> = ({ name, isRevealed, guestCount, o
                 zIndex: 11
               }}
               onMouseEnter={e => {
-                e.currentTarget.style.transform = 'translateX(-50%) scale(1.05) translateY(-2px)';
+                e.currentTarget.style.transform = 'translate(-50%, -50%) scale(1.05)';
                 e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 168, 107, 0.4)';
               }}
               onMouseLeave={e => {
-                e.currentTarget.style.transform = 'translateX(-50%) scale(1)';
+                e.currentTarget.style.transform = 'translate(-50%, -50%) scale(1)';
                 e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 168, 107, 0.3)';
               }}
             >
